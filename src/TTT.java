@@ -13,48 +13,37 @@ public class TTT {
         return table;
     }
 
-    public boolean winner_check() {
-
-        boolean check = false;
-
-        StringBuilder line_r = new StringBuilder();
-        StringBuilder line_c = new StringBuilder();
+    public boolean winner_check2(){
+        boolean checker = false;
+        String line = new String();
+        String line_c = new String();
         StringBuilder line_X1 = new StringBuilder();
         StringBuilder line_X2 = new StringBuilder();
-
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table.length; j++) {
-                line_r.append(table[i][j]);
-                line_c.append(table[j][i]);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                line += table[i][j];
+                line_c += table[j][i];
             }
-            if (line_r.toString().equals("xxx")) {
-                System.out.println("x winner");
-                check = true;
-            }
-            if (line_r.toString().equals("ooo")) {
-                System.out.println("o winner");
-                check = true;
-            }
-            if (line_c.toString().equals("xxx")) {
-                System.out.println("x winner");
-                check = true;
-            }
-            if (line_c.toString().equals("ooo")) {
-                System.out.println("o winner");
-                check = true;
-            }
+        }
+        if (line.contains("xxx") || line_c.contains("xxx")){
+            System.out.println("x winner");
+            checker = true;
+        }
+        if (line.contains("ooo") || line_c.contains("ooo")){
+            System.out.println("o winner");
+            checker = true;
         }
         line_X1.append(table[0][0]).append(table[1][1]).append(table[2][2]);
         line_X2.append(table[0][2]).append(table[1][1]).append(table[2][0]);
         if (line_X1.toString().equals("xxx") || line_X2.toString().equals("xxx")) {
             System.out.println("x winner");
-            check = true;
+            checker = true;
         }
         if (line_X1.toString().equals("ooo") || line_X2.toString().equals("ooo")) {
             System.out.println("o winner");
-            check = true;
+            checker = true;
         }
-        return check;
+        return checker;
     }
 
     public void put_in_table(int number, char sign){
@@ -92,23 +81,36 @@ public class TTT {
     }
 
     public void printer() {
-            for (int i = 0; i < table.length; i++) {
-                for (int j = 0; j < table.length; j++) {
-                    System.out.printf(String.valueOf(table[i][j]));
-                }
-                System.out.println();
+        for (Character[] characters : table) {
+            for (int j = 0; j < table.length; j++) {
+                System.out.printf(String.valueOf(characters[j]));
             }
+            System.out.println();
+        }
             System.out.println("______________");
         }
 
     public static void starter(){
         TTT ttt = new TTT();
+        String name = "player 1";
         Scanner my_box = new Scanner(System.in);
         Scanner my_character = new Scanner(System.in);
         ttt.initializer();
         ttt.printer();
-        while (!ttt.winner_check()){
-            //TODO
+        while (!ttt.winner_check2()){
+            System.out.println(STR."\{name} enter your number:");
+            int box = my_box.nextInt();
+            System.out.println(STR."\{name} enter your character:");
+            String character = my_character.nextLine();
+            ttt.put_in_table(box, character.charAt(0));
+            ttt.printer();
+            if(name.equals("player 1")){
+                name = "player 2";
+            }else {
+                name = "player 1";
+            }
+            ttt.winner_check2();
+
         }
     }
 }
