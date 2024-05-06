@@ -26,21 +26,21 @@ public class TTT {
             }
         }
         if (line.contains("xxx") || line_c.contains("xxx")){
-            System.out.println("x winner");
+            //System.out.println("x winner");
             checker = true;
         }
         if (line.contains("ooo") || line_c.contains("ooo")){
-            System.out.println("o winner");
+            //System.out.println("o winner");
             checker = true;
         }
         line_X1.append(table[0][0]).append(table[1][1]).append(table[2][2]);
         line_X2.append(table[0][2]).append(table[1][1]).append(table[2][0]);
         if (line_X1.toString().equals("xxx") || line_X2.toString().equals("xxx")) {
-            System.out.println("x winner");
+            //System.out.println("x winner");
             checker = true;
         }
         if (line_X1.toString().equals("ooo") || line_X2.toString().equals("ooo")) {
-            System.out.println("o winner");
+            //System.out.println("o winner");
             checker = true;
         }
         return checker;
@@ -92,12 +92,13 @@ public class TTT {
 
     public static void starter(){
         TTT ttt = new TTT();
+        boolean checker = false;
         String name = "player 1";
         Scanner my_box = new Scanner(System.in);
         Scanner my_character = new Scanner(System.in);
         ttt.initializer();
         ttt.printer();
-        while (!ttt.winner_check2()){
+        while (!checker){
             System.out.println(STR."\{name} enter your number:");
             int box = my_box.nextInt();
             System.out.println(STR."\{name} enter your character:");
@@ -109,9 +110,15 @@ public class TTT {
             }else {
                 name = "player 1";
             }
-            ttt.winner_check2();
+            checker = ttt.winner_check2();
 
         }
+        if(name.equals("player 1")){
+            name = "player 2";
+        }else {
+            name = "player 1";
+        }
+        System.out.println(STR."\{name} is winner");
     }
 }
 
