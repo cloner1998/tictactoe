@@ -46,37 +46,19 @@ public class TTT {
         return checker;
     }
 
-    public void put_in_table(int number, char sign){
-        switch (number){
-            case 1:
-                table[0][0] = sign;
-                break;
-            case 2:
-                table[0][1] = sign;
-                break;
-            case 3:
-                table[0][2] = sign;
-                break;
-            case 4:
-                table[1][0] = sign;
-                break;
-            case 5:
-                table[1][1] = sign;
-                break;
-            case 6:
-                table[1][2] = sign;
-                break;
-            case 7:
-                table[2][0] = sign;
-                break;
-            case 8:
-                table[2][1] = sign;
-                break;
-            case 9:
-                table[2][2] = sign;
-                break;
-            default:
-                break;
+    public void add_table(int box, char sign){
+        int row;
+        if(box % 3 == 0){
+            row = box / 3;
+            table[row-1][2] = sign;
+        }
+        if(box % 3 == 2){
+            row = box / 3;
+            table[row][1] = sign;
+        }
+        if(box % 3 == 1){
+            row = box / 3;
+            table[row][0] = sign;
         }
     }
 
@@ -103,7 +85,7 @@ public class TTT {
             int box = my_box.nextInt();
             System.out.println(STR."\{name} enter your character:");
             String character = my_character.nextLine();
-            ttt.put_in_table(box, character.charAt(0));
+            ttt.add_table(box, character.charAt(0));
             ttt.printer();
             if(name.equals("player 1")){
                 name = "player 2";
