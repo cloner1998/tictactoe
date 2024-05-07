@@ -13,6 +13,7 @@ public class TTT {
         return table;
     }
 
+
     public boolean winner_check2(){
         boolean checker = false;
         String line = new String();
@@ -25,11 +26,13 @@ public class TTT {
                 line_c += table[j][i];
             }
         }
-        if (line.contains("xxx") || line_c.contains("xxx")){
+        if ((line.contains("xxx") || line_c.contains("xxx")) && !(line_c.contains("x-x") || line.contains("x-x"))
+        && !(line_c.contains("xox") || line.contains("xox"))){
             //System.out.println("x winner");
             checker = true;
         }
-        if (line.contains("ooo") || line_c.contains("ooo")){
+        if ((line.contains("ooo") || line_c.contains("ooo")) && !(line_c.contains("o-o") || line.contains("o-o"))
+        && !(line_c.contains("oxo") || line.contains("oxo"))){
             //System.out.println("o winner");
             checker = true;
         }
@@ -43,7 +46,25 @@ public class TTT {
             //System.out.println("o winner");
             checker = true;
         }
+
         return checker;
+    }
+
+    public boolean draw_checker(){
+        boolean check = false;
+        String line = null;
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table.length; j++) {
+                line += table[i][j];
+            }
+        }
+        if(!line.contains("-")){
+            TTT ttt = new TTT();
+            if(!ttt.winner_check2()){
+                check = true;
+            }
+        }
+        return check;
     }
 
     public void add_table(int box, char sign){
@@ -93,7 +114,10 @@ public class TTT {
                 name = "player 1";
             }
             checker = ttt.winner_check2();
-
+            if(ttt.draw_checker()){
+                System.out.println("draw");
+                return;
+            }
         }
         if(name.equals("player 1")){
             name = "player 2";
